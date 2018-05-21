@@ -1,0 +1,197 @@
+---
+title: "Explore the AFLW dataset 2017/2018"
+author: "Anna Quaglieri"
+output:
+  html_document: 
+    toc: true
+    fig_cap: true
+    toc_float: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+```
+
+The oriignal data used in this tutorial can be found on the GitHub page of Rforwards: https://github.com/forwards/teaching_examples/tree/master/AFLW. 
+
+# What you will learn
+
+In this tutorial you will learn:
+
+- The difference between **categorical**, **discrete**, and **continuous** variables 
+- How to summarise and graphically display each one them separately 
+- How to summarise and plot these two types of variables together
+
+You will learn these statistical concepts and techniques by exploring the AFL Women dataset taken from the 2017 and 2018 season. 
+
+# Categorical, Discrete, and Continuous variables
+
+We refer to a **variable** as to a set of observations. For example, imagine collecting the **Age** from all students in your class. The list of all the ages of your friends can recorded into a column of an excel spreadsheet and you will refer to it as to **variable Age**. Each entry ( = row, age for one student) of the variable age is referred to as **observation**. 
+
+- **Categorical variables** contain a finite number of categories or distinct groups. For example, the name of the football team, the gender of the player, the colour of the team. These variables are not intrinsically number. 
+
+- **Discrete variables** are numeric variables that have a countable number of values between any two values. A discrete variable is always numeric. For example, the number of customer visiting a pharmacy in a day, the number of players in a team, the number of siblings per student in your class. 
+
+- **Continuous variables** are numeric variables that have an infinite number of values between any two values. A continuous variable can be numeric or date/time. For example, the heigths of trees in your school, the time when you wake up in the morning. 
+
+Let's read the AFLW spreadsheet into R and test your understanding of the different types of variables.
+
+Note: *Each function that you use in R belongs to a package that you need to lead through before you can use that function* 
+
+```{r message=FALSE}
+library(readr) # Load the package 'readr' in order to read .csv files into R
+players <- read_csv("data/players.csv")
+colnames(players) <- gsub(" ","_",colnames(players))
+colnames(players)[colnames(players) %in% "Time_On_Ground_%"] <- "Time_On_Ground_prop"
+```
+
+Print the first 5 roes of the `players` dataset.
+
+```{r}
+library(knitr) # package knitr allows to print a dataset on screen in a nicer way. Compare the two ways below.
+head(players)
+kable(head(players))
+```
+
+```{r}
+#View(players)
+```
+
+- What type of variable is `Club`?
+
+```{r}
+players$Club[1:10]
+```
+
+- What type of variable is `Kicks_TOT`?
+
+```{r}
+players$Kicks_TOT[1:10]
+```
+
+- What type of variable is `Kicks_AVG`?
+
+```{r}
+players$Kicks_AVG[1:10]
+```
+
+
+# Summarise and display Categorical Variables: contingency tables and barplots
+
+- Use **contingency tables** to summarise categorical variables
+
+```{r}
+table(players$Club)
+```
+
+- Use **barplot** to plot catorical variables
+
+A plot 2-dimensional barplot usually contains a set of labels on the x-axis corresponding to the categories of the variable and on the y-axis is the number of times each category of the variable appears in the dataset.
+
+Compare the following two plots:
+
+- `geom_bar()` is used to produce the barplot
+- `theme_bw()` is purely aestethic and simply adds a white background
+- What does `fill=Club` do?
+- What does `coord_flip()` do?
+
+```{r}
+library(ggplot2)
+ggplot(data = players,aes(x=Club,fill=Club)) + geom_bar() + theme_bw()
+ggplot(data = players,aes(x=Club,fill=Club)) + geom_bar() + theme_bw() + coord_flip()
+```
+
+
+# Discrete and continuous variables: summary statistics, histograms ans boxplots
+
+Discrete and continuous variables are usually summarised and displayed using similar tools. Often, discrete variables can be seen as special case of continuous variables. 
+
+## From summary statistics to histogram
+
+- Which one of the following summary stastics do you prefer for the number of total kicks?
+- Are you familiar with the concepts of *mean*, *median*, *quantiles*?
+
+```{r}
+table(players$Kicks_TOT)
+summary(players$Kicks_TOT)
+```
+
+- Use **histograms** or **boxplots** to plot continuous/discrete variables
+
+```{r}
+ggplot(data = players,aes(x=Kicks_TOT)) + geom_histogram(colour="white") + theme_bw()
+# Alternative for continous variables: Boxplot
+ggplot(data = players,aes(x="Tot kicks",y=Kicks_TOT)) + geom_boxplot() + theme_bw()
+# alternative way of producing a boxplot
+boxplot(players$Kicks_TOT)
+```
+
+
+# Summarise and plot continuous variables by levels of a categorical variables
+
+For example, summarise plot the number of total kicks per AFL team
+
+1. Create a table containing the number of total kicks kicked by a team per each year and save it into a new object kicks_by_team
+
+```{r}
+library(dplyr)
+kicks_by_team <- players %>% group_by(Year,Club) %>%
+summarise(Tot.kicks = sum(Kicks_TOT))
+kicks_by_team
+```
+
+2. Per Club, plot number of kicks. 
+
+
+```{r}
+ggplot(data = players,aes(x = Club, y = Kicks_TOT)) + geom_bar(position="dodge",stat="identity") + theme_bw() + facet_wrap(~Year)
+
+# Add title
+ggplot(data = players,aes(x = Club, y = Kicks_TOT,fill=factor(Year))) + geom_bar(position="dodge",stat="identity") + theme_bw() + ggtitle("Total kicks by club by year (2017-1018)")
+
+# Flip coordinate and colour by year
+ggplot(data = players,aes(x = Club, y = Kicks_TOT,fill=factor(Year))) + geom_bar(position="dodge",stat="identity") + theme_bw() + ggtitle("Total kicks by club by year (2017-1018)") + coord_flip()
+
+# Plot total number of goals instead of kicks
+ggplot(data = players,aes(x = Club, y = Goals_TOT,fill=factor(Year))) + geom_bar(position="dodge",stat="identity") + theme_bw() + ggtitle("Total kicks by club by year (2017-1018)") + coord_flip()
+
+```
+
+
+# Explore the relashionship between two discrete variables: Scatterplot
+
+```{r}
+# Kicks by goal
+ggplot(data = players,aes(x = Kicks_TOT, y = Goals_TOT)) + geom_point() + theme_bw() + ggtitle("Total kicks by Total goals (2017-1018)") + coord_flip()
+
+ggplot(data = players,aes(x = Kicks_TOT, y = Goals_TOT)) + geom_point() + theme_bw() + ggtitle("Total kicks by Total goals (2017-1018)") + coord_flip() + facet_wrap(~Year)
+
+# Kicks by handballs
+ggplot(data = players,aes(x = Kicks_TOT, y = Handballs_TOT)) + geom_point() + theme_bw() + ggtitle("Total kicks by Total goals (2017-1018)") + coord_flip()
+
+ggplot(data = players,aes(x = Kicks_TOT, y = Handballs_TOT)) + geom_point() + theme_bw() + ggtitle("Total kicks by Total goals (2017-1018)") + coord_flip() + facet_wrap(~Year)
+
+```
+
+
+- What can you say about these plots? Is there a relationship between the number of handballs per player and the number of kicks?
+
+
+- An example of interactive plot
+
+```{r}
+library(plotly)
+
+ggplotly(ggplot(data = players,aes(x = Kicks_TOT, y = Handballs_TOT,label=Player,label=Club)) + geom_point() + theme_bw() + ggtitle("Total kicks by Total goals (2017-1018)") + coord_flip() + facet_wrap(~Year))
+
+```
+
+
+```{r eval=FALS}
+purl("explore_teams_and_players.Rmd")
+```
+
+
+
+

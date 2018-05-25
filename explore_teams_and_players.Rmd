@@ -2,10 +2,10 @@
 title: "Explore the AFLW dataset 2017/2018"
 author: "Anna Quaglieri"
 output:
-  html_document:
+  github_document:
     toc: yes
     toc_depth: 3
-  github_document:
+  html_document:
     toc: yes
     toc_depth: 3
 linkcolor: magenta

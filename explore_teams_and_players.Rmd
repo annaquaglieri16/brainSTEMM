@@ -2,18 +2,61 @@
 title: "Explore the AFLW dataset 2017/2018"
 author: "Anna Quaglieri"
 output:
-  html_document: 
-    toc: true
-    fig_cap: true
-    toc_float: true
+  github_document:
+    toc: yes
+    toc_depth: 3
+  html_document:
+    toc: yes
+    toc_depth: 3
+linkcolor: magenta
+urlcolor: magenta
 ---
 
 
+
 ```{r setup, include=FALSE}
+library(png)
+library(grid)
+library(here)
 knitr::opts_chunk$set(echo = TRUE, message = FALSE)
 ```
 
 The oriignal data used in this tutorial can be found on the GitHub page of Rforwards: https://github.com/forwards/teaching_examples/tree/master/AFLW. 
+
+# How to download and play with the material in this folder
+
+1. Go to the GitHub folder https://github.com/annaquaglieri16/brainSTEMM 
+2. Click on the green button in the top right corner **Clone or Download**
+3. Select Download Zip
+
+
+```{r echo=FALSE,message=FALSE,fig.width=5,fig.height=5,fig.align='center',cache=TRUE}
+img <- readPNG(file.path(here(),"Figures/Download.png"))
+grid.raster(img)
+```
+
+4. Unzip the folder and double click on **AFLW.Rproj**. This will open and R studio session. 
+
+```{r echo=FALSE,message=FALSE,fig.width=5,fig.height=5,fig.align='center',cache=TRUE}
+img <- readPNG(file.path(here(),"Figures/OpenRstudioProject.png"))
+grid.raster(img)
+```
+
+5. Now you can see all the files (see picture below bottom right corner) and click on **Explore_teams_and_players.R**
+
+```{r echo=FALSE,message=FALSE,fig.width=5,fig.height=5,fig.align='center',cache=TRUE}
+img <- readPNG(file.path(here(),"Figures/RStudioOpen.png"))
+grid.raster(img)
+```
+
+6. The lines starting with # are comments. Now try to run the R code and see what happens! To run the lines of R code you can put your cursor on the line that you want to run and either press the `Run` button in the topright corner or press `Command + Enter` or simply copy and paste the code into the Console!!
+
+```{r echo=FALSE,message=FALSE,fig.width=5,fig.height=5,fig.align='center',cache=TRUE}
+img <- readPNG(file.path(here(),"Figures/Rcode.png"))
+grid.raster(img)
+```
+
+6. If you want, outside of R Studio you can open the **Explore_teams_and_players.html** file which contains all comments and results. Follow this document and run the R code and have fun!!!
 
 # What you will learn
 
@@ -37,11 +80,18 @@ We refer to a **variable** as to a set of observations. For example, imagine col
 
 Let's read the AFLW spreadsheet into R and test your understanding of the different types of variables.
 
-Note: *Each function that you use in R belongs to a package that you need to lead through before you can use that function* 
+Note1: *Each function that you use in R belongs to a package that you need to lead through before you can use that function* 
+
+Note2: We call **players** a dataset. You can see a dataset as a collection of variables (of any type!) put together in several columns next to each other. A dataset as a certain number of rows and columns.
+
+Let's explore it!
+
+First let's read the spreadsheet into R with the fucntion `read.csv()`
 
 ```{r message=FALSE}
 library(readr) # Load the package 'readr' in order to read .csv files into R
 players <- read_csv("data/players.csv")
+# The following two lines are simply a way to clean up the names of the columns
 colnames(players) <- gsub(" ","_",colnames(players))
 colnames(players)[colnames(players) %in% "Time_On_Ground_%"] <- "Time_On_Ground_prop"
 ```
@@ -50,13 +100,10 @@ Print the first 5 roes of the `players` dataset.
 
 ```{r}
 library(knitr) # package knitr allows to print a dataset on screen in a nicer way. Compare the two ways below.
-head(players)
+head(players) # print the first 5 rows of the dataset players
 kable(head(players))
 ```
 
-```{r}
-#View(players)
-```
 
 - What type of variable is `Club`?
 
@@ -77,9 +124,9 @@ players$Kicks_AVG[1:10]
 ```
 
 
-# Summarise and display Categorical Variables: contingency tables and barplots
+# Summarise and display Categorical Variables: frequency tables and barplots
 
-- Use **contingency tables** to summarise categorical variables
+- Use **frequency tables** to summarise categorical variables
 
 ```{r}
 table(players$Club)
@@ -87,7 +134,14 @@ table(players$Club)
 
 - Use **barplot** to plot catorical variables
 
-A plot 2-dimensional barplot usually contains a set of labels on the x-axis corresponding to the categories of the variable and on the y-axis is the number of times each category of the variable appears in the dataset.
+A barplot usually contains a set of labels on the x-axis corresponding to the categories of the variable and on the y-axis is the number of times each category of the variable appears in the dataset.
+
+
+```{r}
+barplot(table(players$Club),main="Number of players in each club")
+```
+
+Below is another way in which you can plot this data using the `ggplot()` function. It might look more complicated at first but don't worry, try to run the code and see what happens!!
 
 Compare the following two plots:
 
@@ -117,20 +171,23 @@ table(players$Kicks_TOT)
 summary(players$Kicks_TOT)
 ```
 
-- Use **histograms** or **boxplots** to plot continuous/discrete variables
+- Use **histograms** to plot continuous/discrete variables
+
+```{r}
+hist(players$Kicks_TOT,main="Total number of kicks")
+```
+
+Again, have a try to plot the function with `ggplot()` 
 
 ```{r}
 ggplot(data = players,aes(x=Kicks_TOT)) + geom_histogram(colour="white") + theme_bw()
-# Alternative for continous variables: Boxplot
-ggplot(data = players,aes(x="Tot kicks",y=Kicks_TOT)) + geom_boxplot() + theme_bw()
-# alternative way of producing a boxplot
-boxplot(players$Kicks_TOT)
 ```
-
 
 # Summarise and plot continuous variables by levels of a categorical variables
 
-For example, summarise plot the number of total kicks per AFL team
+The following code might look more complicated but again, try to run it and try to interpret the result!
+
+For example, summarise plot the number of total kicks per AFL team. 
 
 1. Create a table containing the number of total kicks kicked by a team per each year and save it into a new object kicks_by_team
 
@@ -188,10 +245,130 @@ ggplotly(ggplot(data = players,aes(x = Kicks_TOT, y = Handballs_TOT,label=Player
 ```
 
 
-```{r eval=FALS}
+```{r eval=FALSE}
 purl("explore_teams_and_players.Rmd")
 ```
 
+
+# Now have a go with the Shiny App!!
+
+Run all the following code and.... magic will happen!
+
+You can click the green arrow pointing to wards right in the top right corner of the following chunk to run all the code at once!
+
+```{r echo=FALSE,message=FALSE,fig.width=5,fig.height=5,fig.align='center',cache=TRUE}
+img <- readPNG(file.path(here(),"Figures/Runchunck.png"))
+grid.raster(img)
+```
+
+By running all the code a web page will open and you can play around interactively with the AFLW data! To exit from the App press the `STOP` red button in top right corner of the console.
+
+```{r echo=FALSE,message=FALSE,fig.width=5,fig.height=5,fig.align='center',cache=TRUE}
+img <- readPNG(file.path(here(),"Figures/stop_shinyApp.png"))
+grid.raster(img)
+```
+
+```{r eval=FALSE}
+#
+# This is a Shiny web application. You can run the application by clicking
+# the 'Run App' button above.
+#
+# Find out more about building applications with Shiny here:
+#
+#    http://shiny.rstudio.com/
+#
+
+library(shiny)
+library(shinydashboard)
+library(shinythemes)
+library(tidyverse)
+library(plotly)
+
+players <- read_csv("data/players.csv")
+teams <- read_csv("data/teams.csv")
+colnames(players) <- gsub(" ","_",colnames(players))
+realvars <- c("Kicks_TOT", "Handballs_TOT", "Disposals_TOT", "Marks_TOT", "Frees_Agst_TOT", "Goals_TOT", "Behinds_TOT", "Goal_assists_TOT",
+              "Time_On_Ground_prop")
+colnames(players)[colnames(players) %in% "Time_On_Ground_%"] <- "Time_On_Ground_prop"
+catvars <- c("Player", "Club")
+clubs <- unique(players$Club)
+
+# Define UI for application that draws a histogram
+ui <- fluidPage(theme = shinytheme("flatly"),
+  titlePanel("Exploring the AFLW statistics"),
+    tabsetPanel(
+      tabPanel("Data",
+      # Sidebar with a slider input for number of bins
+      sidebarLayout(
+        sidebarPanel(
+          selectInput('x', "X", realvars, realvars[1]),
+          selectInput('y', "Y", realvars, realvars[2]),
+          selectInput('label', "Label", catvars),
+          radioButtons('clr', "Colour by club:", c("None", clubs))
+        ),
+
+        # Show a plot of the generated distribution
+        mainPanel(
+          plotlyOutput("scatterplot")
+        )
+      )
+    ),
+    tabPanel("Players",
+     sidebarLayout(
+       sidebarPanel(
+         radioButtons('year', "Year", c("2017", "2018"), "2018"),
+         checkboxGroupInput('vars', "Variables to use:", realvars, realvars[1:3])
+        ),
+
+        # Show a plot of the generated distribution
+        mainPanel(
+          plotlyOutput("mds")
+        )
+      )
+    )
+  )
+)
+
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+
+   output$scatterplot <- renderPlotly({
+     p <- ggplot(players,
+            aes_string(x = input$x, y = input$y,
+                       label = input$label)) +
+       geom_point(alpha = 0.8) + labs(x=input$x,y=input$y)+
+       facet_wrap(~Year, ncol=2) + theme_bw()
+     if (input$clr != "None") {
+       players$Clubclr <- "no"
+       players$Clubclr[players$Club == input$clr] <- "yes"
+       p <- p + aes(colour=players$Clubclr) +
+         scale_colour_brewer(palette="Dark2",name=input$clr) +
+         #theme(legend.position = "none")
+         theme(legend.position = "bottom")+
+         theme_bw()
+     }
+     ggplotly(p)
+   })
+
+   output$mds <- renderPlotly({
+     players_sub <- players %>%
+       filter(Year == input$year) %>%
+       select(input$vars)
+     players_sub_mat <- as.matrix(players_sub)
+     players_mds <- cmdscale(dist(players_sub_mat), k=2)
+     players_mds_df <- as_tibble(players_mds)
+     players_mds_df$Player <- players$Player[players$Year == input$year]
+     p2 <- ggplot(players_mds_df, aes(x=V1, y=V2, label=Player)) + geom_point() +theme_bw()
+     ggplotly(p2, tooltip=c("label"))
+   })
+
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+
+
+```
 
 
 

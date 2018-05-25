@@ -170,6 +170,8 @@ barplot(table(players$Club),main="Number of players in each club")
 
 Below is another way in which you can plot this data using the `ggplot()` function. It might look more complicated at first but don't worry, try to run the code and see what happens!!
 
+An Introduction to `ggplot()` is provided in Di Cook's tutorial <https://ebsmonash.shinyapps.io/foRwards_Girls_Coding_Workshop/#section-grammar-of-graphics>.
+
 Compare the following two plots:
 
 -   `geom_bar()` is used to produce the barplot
@@ -247,9 +249,11 @@ Summarise and plot continuous variables by levels of a categorical variables
 
 The following code might look more complicated but again, try to run it and try to interpret the result!
 
-For example, summarise plot the number of total kicks per AFL team.
+For example, summarise the number of total kicks per AFL team.
 
 1.  Create a table containing the number of total kicks kicked by a team per each year and save it into a new object kicks\_by\_team
+
+You can find more details about the functions `group_by()` and `summarise()` and `%>%` in Di Cook's tutorial <https://ebsmonash.shinyapps.io/foRwards_Girls_Coding_Workshop/#section-wrangling-verbs>.
 
 ``` r
 library(dplyr)

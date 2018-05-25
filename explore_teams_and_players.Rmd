@@ -237,7 +237,7 @@ ggplot(data = players,aes(x = Kicks_TOT, y = Handballs_TOT)) + geom_point() + th
 
 - An example of interactive plot
 
-```{r}
+```{r eval=FALSE}
 library(plotly)
 
 ggplotly(ggplot(data = players,aes(x = Kicks_TOT, y = Handballs_TOT,label=Player,label=Club)) + geom_point() + theme_bw() + ggtitle("Total kicks by Total goals (2017-1018)") + coord_flip() + facet_wrap(~Year))

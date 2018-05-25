@@ -2,10 +2,10 @@
 title: "Explore the AFLW dataset 2017/2018"
 author: "Anna Quaglieri"
 output:
-  github_document:
+  html_document:
     toc: yes
     toc_depth: 3
-  html_document:
+  github_document:
     toc: yes
     toc_depth: 3
 linkcolor: magenta
@@ -30,28 +30,28 @@ The oriignal data used in this tutorial can be found on the GitHub page of Rforw
 3. Select Download Zip
 
 
-```{r echo=FALSE,message=FALSE,fig.width=5,fig.height=5,fig.align='center',cache=TRUE}
+```{r echo=FALSE,message=FALSE,fig.width=9,fig.height=9,fig.align='center',cache=TRUE}
 img <- readPNG(file.path(here(),"Figures/Download.png"))
 grid.raster(img)
 ```
 
 4. Unzip the folder and double click on **AFLW.Rproj**. This will open and R studio session. 
 
-```{r echo=FALSE,message=FALSE,fig.width=5,fig.height=5,fig.align='center',cache=TRUE}
+```{r echo=FALSE,message=FALSE,fig.width=8,fig.height=8,fig.align='center',cache=TRUE}
 img <- readPNG(file.path(here(),"Figures/OpenRstudioProject.png"))
 grid.raster(img)
 ```
 
 5. Now you can see all the files (see picture below bottom right corner) and click on **Explore_teams_and_players.R**
 
-```{r echo=FALSE,message=FALSE,fig.width=5,fig.height=5,fig.align='center',cache=TRUE}
+```{r echo=FALSE,message=FALSE,fig.width=10,fig.height=9,fig.align='center',cache=TRUE}
 img <- readPNG(file.path(here(),"Figures/RStudioOpen.png"))
 grid.raster(img)
 ```
 
 6. The lines starting with # are comments. Now try to run the R code and see what happens! To run the lines of R code you can put your cursor on the line that you want to run and either press the `Run` button in the topright corner or press `Command + Enter` or simply copy and paste the code into the Console!!
 
-```{r echo=FALSE,message=FALSE,fig.width=5,fig.height=5,fig.align='center',cache=TRUE}
+```{r echo=FALSE,message=FALSE,fig.width=10,fig.height=8,fig.align='center',cache=TRUE}
 img <- readPNG(file.path(here(),"Figures/Rcode.png"))
 grid.raster(img)
 ```

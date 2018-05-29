@@ -2,10 +2,10 @@
 title: "Explore the AFLW dataset 2017/2018"
 author: "Anna Quaglieri"
 output:
-  html_document:
+  github_document:
     toc: yes
     toc_depth: 3
-  github_document:
+  html_document:
     toc: yes
     toc_depth: 3
 linkcolor: magenta
@@ -249,11 +249,6 @@ ggplotly(ggplot(data = players,aes(x = Kicks_TOT, y = Handballs_TOT,label=Player
 ```
 
 
-```{r eval=FALSE}
-purl("explore_teams_and_players.Rmd")
-```
-
-
 # Now have a go with the Shiny App!!
 
 Run all the following code and.... magic will happen!
@@ -375,4 +370,7 @@ shinyApp(ui = ui, server = server)
 ```
 
 
+```{r eval=TRUE}
+purl("explore_teams_and_players.Rmd")
+```
 

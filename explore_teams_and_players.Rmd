@@ -2,10 +2,10 @@
 title: "Explore the AFLW dataset 2017/2018"
 author: "Anna Quaglieri"
 output:
-  github_document:
+  html_document:
     toc: yes
     toc_depth: 3
-  html_document:
+  github_document:
     toc: yes
     toc_depth: 3
 linkcolor: magenta
@@ -14,7 +14,7 @@ urlcolor: magenta
 
 
 
-```{r setup, include=FALSE}
+```{r include=FALSE}
 library(png)
 library(grid)
 library(here)
@@ -241,7 +241,7 @@ ggplot(data = players,aes(x = Kicks_TOT, y = Handballs_TOT)) + geom_point() + th
 
 - An example of interactive plot
 
-```{r eval=FALSE}
+```{r eval=TRUE}
 library(plotly)
 
 ggplotly(ggplot(data = players,aes(x = Kicks_TOT, y = Handballs_TOT,label=Player,label=Club)) + geom_point() + theme_bw() + ggtitle("Total kicks by Total goals (2017-1018)") + coord_flip() + facet_wrap(~Year))

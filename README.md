@@ -351,10 +351,6 @@ library(plotly)
 ggplotly(ggplot(data = players,aes(x = Kicks_TOT, y = Handballs_TOT,label=Player,label=Club)) + geom_point() + theme_bw() + ggtitle("Total kicks by Total goals (2017-1018)") + coord_flip() + facet_wrap(~Year))
 ```
 
-``` r
-purl("explore_teams_and_players.Rmd")
-```
-
 Now have a go with the Shiny App!!
 ==================================
 
@@ -362,11 +358,11 @@ Run all the following code and.... magic will happen!
 
 You can click the green arrow pointing to wards right in the top right corner of the following chunk to run all the code at once!
 
-<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
+<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-20-1.png" style="display: block; margin: auto;" />
 
 By running all the code a web page will open and you can play around interactively with the AFLW data! To exit from the App press the `STOP` red button in top right corner of the console.
 
-<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-22-1.png" style="display: block; margin: auto;" />
+<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
 
 ``` r
 #
@@ -466,4 +462,8 @@ server <- function(input, output) {
 
 # Run the application
 shinyApp(ui = ui, server = server)
+```
+
+``` r
+purl("explore_teams_and_players.Rmd")
 ```

@@ -22,8 +22,6 @@ Data source
 How to download and play with the material in this folder
 =========================================================
 
-------------------------------------------------------------------------
-
 1.  Go to the GitHub folder <https://github.com/annaquaglieri16/brainSTEMM>
 2.  Click on the green button in the top right corner **Clone or Download**
 3.  Select Download Zip

@@ -2,16 +2,16 @@
 title: "Explore the AFLW dataset 2017/2018"
 author: "Anna Quaglieri"
 output:
-  html_document:
-    toc: yes
-    toc_depth: 3
   github_document:
     toc: yes
     toc_depth: 3
+  html_document:
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
 linkcolor: magenta
 urlcolor: magenta
 ---
-
 
 
 ```{r include=FALSE}
@@ -21,9 +21,14 @@ library(here)
 knitr::opts_chunk$set(echo = TRUE, message = FALSE)
 ```
 
-The oriignal data used in this tutorial can be found on the GitHub page of Rforwards: https://github.com/forwards/teaching_examples/tree/master/AFLW. 
+# Data source
+
+- Scraped data and original Shiny App (code at the end of this tutorial) were created at https://github.com/ropenscilabs/ozwomensport/tree/master/AFLW
+- The material used for this tutorial are now part of the [R-Forwards](https://forwards.github.io/) [teaching examples](https://github.com/forwards/teaching_examples).
 
 # How to download and play with the material in this folder
+
+----
 
 1. Go to the GitHub folder https://github.com/annaquaglieri16/brainSTEMM 
 2. Click on the green button in the top right corner **Clone or Download**
@@ -241,7 +246,7 @@ ggplot(data = players,aes(x = Kicks_TOT, y = Handballs_TOT)) + geom_point() + th
 
 - An example of interactive plot
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 library(plotly)
 
 ggplotly(ggplot(data = players,aes(x = Kicks_TOT, y = Handballs_TOT,label=Player,label=Club)) + geom_point() + theme_bw() + ggtitle("Total kicks by Total goals (2017-1018)") + coord_flip() + facet_wrap(~Year))
@@ -370,7 +375,7 @@ shinyApp(ui = ui, server = server)
 ```
 
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 purl("explore_teams_and_players.Rmd")
 ```
 

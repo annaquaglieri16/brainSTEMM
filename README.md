@@ -1,6 +1,5 @@
 Explore the AFLW dataset 2017/2018
 ================
-Anna Quaglieri
 
 -   [Data source](#data-source)
 -   [Info about brainSTEMM](#info-about-brainstemm)

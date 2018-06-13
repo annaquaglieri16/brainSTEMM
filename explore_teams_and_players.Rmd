@@ -1,6 +1,5 @@
 ---
 title: "Explore the AFLW dataset 2017/2018"
-author: "Anna Quaglieri"
 output:
   github_document:
     toc: yes

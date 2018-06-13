@@ -26,6 +26,10 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE)
 - Scraped data and original Shiny App (code at the end of this tutorial) were created at https://github.com/ropenscilabs/ozwomensport/tree/master/AFLW
 - The material used for this tutorial are now part of the [R-Forwards](https://forwards.github.io/) [teaching examples](https://github.com/forwards/teaching_examples).
 
+# Info about brainSTEMM 
+
+Find more information about the brainSTEMM 2018 project at the [WISPP webiste](https://www.wispp.org.au/girls-regional-innovation-challenge/)
+
 # How to download and play with the material in this folder
 
 

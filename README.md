@@ -3,6 +3,7 @@ Explore the AFLW dataset 2017/2018
 Anna Quaglieri
 
 -   [Data source](#data-source)
+-   [Info about brainSTEMM](#info-about-brainstemm)
 -   [How to download and play with the material in this folder](#how-to-download-and-play-with-the-material-in-this-folder)
 -   [What you will learn](#what-you-will-learn)
 -   [Categorical, Discrete, and Continuous variables](#categorical-discrete-and-continuous-variables)
@@ -18,6 +19,11 @@ Data source
 
 -   Scraped data and original Shiny App (code at the end of this tutorial) were created at <https://github.com/ropenscilabs/ozwomensport/tree/master/AFLW>
 -   The material used for this tutorial are now part of the [R-Forwards](https://forwards.github.io/) [teaching examples](https://github.com/forwards/teaching_examples).
+
+Info about brainSTEMM
+=====================
+
+Find more information about the brainSTEMM 2018 project at the [WISPP webiste](https://www.wispp.org.au/girls-regional-innovation-challenge/)
 
 How to download and play with the material in this folder
 =========================================================

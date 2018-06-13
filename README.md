@@ -2,6 +2,7 @@ Explore the AFLW dataset 2017/2018
 ================
 Anna Quaglieri
 
+-   [Data source](#data-source)
 -   [How to download and play with the material in this folder](#how-to-download-and-play-with-the-material-in-this-folder)
 -   [What you will learn](#what-you-will-learn)
 -   [Categorical, Discrete, and Continuous variables](#categorical-discrete-and-continuous-variables)
@@ -12,28 +13,34 @@ Anna Quaglieri
 -   [Explore the relashionship between two discrete variables: Scatterplot](#explore-the-relashionship-between-two-discrete-variables-scatterplot)
 -   [Now have a go with the Shiny App!!](#now-have-a-go-with-the-shiny-app)
 
-The oriignal data used in this tutorial can be found on the GitHub page of Rforwards: <https://github.com/forwards/teaching_examples/tree/master/AFLW>.
+Data source
+===========
+
+-   Scraped data and original Shiny App (code at the end of this tutorial) were created at <https://github.com/ropenscilabs/ozwomensport/tree/master/AFLW>
+-   The material used for this tutorial are now part of the [R-Forwards](https://forwards.github.io/) [teaching examples](https://github.com/forwards/teaching_examples).
 
 How to download and play with the material in this folder
 =========================================================
+
+------------------------------------------------------------------------
 
 1.  Go to the GitHub folder <https://github.com/annaquaglieri16/brainSTEMM>
 2.  Click on the green button in the top right corner **Clone or Download**
 3.  Select Download Zip
 
-<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
+<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 
 1.  Unzip the folder and double click on **AFLW.Rproj**. This will open and R studio session.
 
-<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 1.  Now you can see all the files (see picture below bottom right corner) and click on **Explore\_teams\_and\_players.R**
 
-<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 1.  The lines starting with \# are comments. Now try to run the R code and see what happens! To run the lines of R code you can put your cursor on the line that you want to run and either press the `Run` button in the topright corner or press `Command + Enter` or simply copy and paste the code into the Console!!
 
-<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 1.  If you want, outside of R Studio you can open the **Explore\_teams\_and\_players.html** file which contains all comments and results. Follow this document and run the R code and have fun!!!
 
@@ -166,7 +173,7 @@ A barplot usually contains a set of labels on the x-axis corresponding to the ca
 barplot(table(players$Club),main="Number of players in each club")
 ```
 
-![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-11-1.png)
+![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
 Below is another way in which you can plot this data using the `ggplot()` function. It might look more complicated at first but don't worry, try to run the code and see what happens!!
 
@@ -184,13 +191,13 @@ library(ggplot2)
 ggplot(data = players,aes(x=Club,fill=Club)) + geom_bar() + theme_bw()
 ```
 
-![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-12-1.png)
+![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
 ``` r
 ggplot(data = players,aes(x=Club,fill=Club)) + geom_bar() + theme_bw() + coord_flip()
 ```
 
-![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-12-2.png)
+![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-13-2.png)
 
 Discrete and continuous variables: summary statistics, histograms ans boxplots
 ==============================================================================
@@ -234,7 +241,7 @@ summary(players$Kicks_TOT)
 hist(players$Kicks_TOT,main="Total number of kicks")
 ```
 
-![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-14-1.png)
+![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-15-1.png)
 
 Again, have a try to plot the function with `ggplot()`
 
@@ -242,7 +249,7 @@ Again, have a try to plot the function with `ggplot()`
 ggplot(data = players,aes(x=Kicks_TOT)) + geom_histogram(colour="white") + theme_bw()
 ```
 
-![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-15-1.png)
+![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-16-1.png)
 
 Summarise and plot continuous variables by levels of a categorical variables
 ============================================================================
@@ -289,28 +296,28 @@ kicks_by_team
 ggplot(data = players,aes(x = Club, y = Kicks_TOT)) + geom_bar(position="dodge",stat="identity") + theme_bw() + facet_wrap(~Year)
 ```
 
-![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-17-1.png)
+![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-18-1.png)
 
 ``` r
 # Add title
 ggplot(data = players,aes(x = Club, y = Kicks_TOT,fill=factor(Year))) + geom_bar(position="dodge",stat="identity") + theme_bw() + ggtitle("Total kicks by club by year (2017-1018)")
 ```
 
-![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-17-2.png)
+![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-18-2.png)
 
 ``` r
 # Flip coordinate and colour by year
 ggplot(data = players,aes(x = Club, y = Kicks_TOT,fill=factor(Year))) + geom_bar(position="dodge",stat="identity") + theme_bw() + ggtitle("Total kicks by club by year (2017-1018)") + coord_flip()
 ```
 
-![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-17-3.png)
+![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-18-3.png)
 
 ``` r
 # Plot total number of goals instead of kicks
 ggplot(data = players,aes(x = Club, y = Goals_TOT,fill=factor(Year))) + geom_bar(position="dodge",stat="identity") + theme_bw() + ggtitle("Total kicks by club by year (2017-1018)") + coord_flip()
 ```
 
-![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-17-4.png)
+![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-18-4.png)
 
 Explore the relashionship between two discrete variables: Scatterplot
 =====================================================================
@@ -320,26 +327,26 @@ Explore the relashionship between two discrete variables: Scatterplot
 ggplot(data = players,aes(x = Kicks_TOT, y = Goals_TOT)) + geom_point() + theme_bw() + ggtitle("Total kicks by Total goals (2017-1018)") + coord_flip()
 ```
 
-![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-18-1.png)
+![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-19-1.png)
 
 ``` r
 ggplot(data = players,aes(x = Kicks_TOT, y = Goals_TOT)) + geom_point() + theme_bw() + ggtitle("Total kicks by Total goals (2017-1018)") + coord_flip() + facet_wrap(~Year)
 ```
 
-![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-18-2.png)
+![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-19-2.png)
 
 ``` r
 # Kicks by handballs
 ggplot(data = players,aes(x = Kicks_TOT, y = Handballs_TOT)) + geom_point() + theme_bw() + ggtitle("Total kicks by Total goals (2017-1018)") + coord_flip()
 ```
 
-![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-18-3.png)
+![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-19-3.png)
 
 ``` r
 ggplot(data = players,aes(x = Kicks_TOT, y = Handballs_TOT)) + geom_point() + theme_bw() + ggtitle("Total kicks by Total goals (2017-1018)") + coord_flip() + facet_wrap(~Year)
 ```
 
-![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-18-4.png)
+![](explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-19-4.png)
 
 -   What can you say about these plots? Is there a relationship between the number of handballs per player and the number of kicks?
 
@@ -358,11 +365,11 @@ Run all the following code and.... magic will happen!
 
 You can click the green arrow pointing to wards right in the top right corner of the following chunk to run all the code at once!
 
-<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-20-1.png" style="display: block; margin: auto;" />
+<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
 
 By running all the code a web page will open and you can play around interactively with the AFLW data! To exit from the App press the `STOP` red button in top right corner of the console.
 
-<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
+<img src="explore_teams_and_players_files/figure-markdown_github/unnamed-chunk-22-1.png" style="display: block; margin: auto;" />
 
 ``` r
 #
